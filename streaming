@@ -1,0 +1,54 @@
+// src/App.js
+import React, { useState } from "react";
+import './App.css';
+
+// Sample movie list
+const movies = [
+  { title: "Movie 1", src: "https://sample-videos.com/video123/mp4/480/asdasdas.mp4" },
+  { title: "Movie 2", src: "https://sample-videos.com/video123/mp4/480/asdasdas2.mp4" },
+  { title: "Movie 3", src: "https://sample-videos.com/video123/mp4/480/asdasdas3.mp4" }
+];
+
+function App() {
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const handleMovieSelect = (movie) => {
+    setSelectedMovie(movie);
+  };
+
+  return (
+    <div className="App">
+      <header>
+        <h1>Movie Streaming</h1>
+        <input
+          type="text"
+          placeholder="Search movies..."
+          className="search-bar"
+        />
+      </header>
+
+      <main>
+        <div className="movie-list">
+          {movies.map((movie, index) => (
+            <div key={index} className="movie-item" onClick={() => handleMovieSelect(movie)}>
+              <img src={`https://via.placeholder.com/150?text=${movie.title}`} alt={movie.title} />
+              <p>{movie.title}</p>
+            </div>
+          ))}
+        </div>
+
+        {selectedMovie && (
+          <div className="video-player">
+            <h2>Now Playing: {selectedMovie.title}</h2>
+            <video controls width="600">
+              <source src={selectedMovie.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+export default App;
